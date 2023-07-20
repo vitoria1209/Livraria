@@ -1,31 +1,28 @@
-function doGet() {
-  return HtmlService.createTemplateFromFile('formulario').evaluate();
-  
+function doGet(){
+  return HtmlService.createTemplateFromFile('CADLIVRO').evaluate();
 }
-function doPost(e){
-  Logger.log(e.parameter.msg)
-  Logger.log(e.parameter.endereco)
-}
+
+
 function getUrl(){
-  var url = ScriptApp.getService().getUrl();
-  return url
+
+var url = ScriptApp.getService().getUrl();
+
+return url;
 }
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <base target="_top">
-  </head>
-  <body>
-    <? var url = getUrl() ?>
+function doPost(e){
 
-    <form action="<?= url ?>" method="POST">
-       <label for="msg">Mensagem</label>
-       <input type="text" id="text" name="msg">
-       <label for="endereco">Endereço</label>
-       <input type="text" id="endereco" name="endereco">
+Logger.log(e.parameter.titulo)
 
-       <button type="submit">Enviar</button>   
-    </form>    
-  </body>
-</html>
+var titulo = e.parameter.titulo;
+var autor= e.parameter.autor;
+var dataLancamento = e.parameter.dataLancamento;
+var qtdPagina = e.parameter.qtdPagina;
+var qtdLivro = e.parameter.qtdLivro;
+
+var planilha = SpreadsheetApp.openById('1CJ8MWMuVJcoIQX_tDj84WV60uqeu_xkN9FA2G79pHZM')
+
+var tabela = planilha.getSheetByName('TABELA1')
+
+tabela.appendRow([titulo, autor, dataLancamento, qtdPagina, qtdLivro])
+}
